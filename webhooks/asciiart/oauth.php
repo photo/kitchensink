@@ -1,7 +1,7 @@
 <?php
-require 'OpenPhotoOauth.php';
-require 'secrets.php';
-require 'util.php';
+require './OpenPhotoOAuth.php';
+require './secrets.php';
+require './util.php';
 
 if(isset($_GET['oauth_consumer_key']) && isset($_GET['oauth_consumer_secret']) && isset($_GET['oauth_token']) && isset($_GET['oauth_token_secret']))
 {

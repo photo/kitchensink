@@ -1,6 +1,6 @@
 <?php
-require 'secrets.php';
-require 'util.php';
+require './secrets.php';
+require './util.php';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST')
   callbackPost();
@@ -13,14 +13,12 @@ function callback()
     echo $_GET['challenge'];
 }
 
-function callbackPost($dbh)
+function callbackPost()
 {
   global $dbh, $mysqltable;
   $sth = $dbh->prepare("SELECT * FROM `{$mysqltable}` WHERE id=:id", array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
   $sth->execute(array(':id' => $_GET['id']));
   $user = $sth->fetch(PDO::FETCH_ASSOC);
-
-  error_log(var_export($user, 1));
 
   $photoUrl = sprintf('http://%s%s', $_POST['host'], $_POST['pathOriginal']);
   $apiUrl = sprintf('http://www.degraeve.com/img2txt-yay.php?url=%s&mode=A&size=100&charstr=ABCDEFGHIJKLMNOPQRSTUVWXYZ&order=O&invert=N', urlencode($photoUrl));
@@ -29,7 +27,6 @@ function callbackPost($dbh)
   $ascii = curl_exec($ch);
   curl_close($ch);
   preg_match('#<pre>.*</pre>#ism', $ascii, $matches);
-  error_log($ascii);
 
   $headers = "From: OpenPhoto Robot <no-reply@openphoto.me>\r\n" .
         "Reply-To: no-reply@openphoto.me\r\n" .
