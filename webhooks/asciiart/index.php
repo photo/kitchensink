@@ -1,3 +1,10 @@
+<?php
+/*
+ * This is an example of using the OpenPhoto Webhook API.
+ *
+ * Author Jaisen Mathai <jaisen@jmathai.com>
+ */
+??>
 <!doctype html>
 <html class="no-js" lang="en">
 <head>
@@ -91,7 +98,7 @@
     </style>
     <script type="text/javascript">
       function goToSite() {
-        var hostname = document.getElementById('hostname').value,
+        var hostname = document.getElementById('hostname').value.replace('http://',''),
             email = document.getElementById('email').value;
         if(hostname.length > 0 && email.length > 0)
           location.href = 'http://'+hostname+'/v1/oauth/authorize?name='+escape('OpenPhoto ASCII Art')+'&oauth_callback='+escape(location.href+'oauth.php?email='+email);

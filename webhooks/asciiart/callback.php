@@ -1,4 +1,13 @@
 <?php
+/*
+ * This page is the callback page for the webhook verification and all photo.upload actions.
+ * Each time a user uploads a photo then the OpenPhoto server will POST to this page.
+ *
+ * If the request method is GET then it's a verification request as described here:
+ *  https://github.com/openphoto/frontend/blob/master/documentation/api/PostWebhookSubscribe.markdown
+ * 
+ * If the request method is POST then it's a callback post from the OpenPhoto server indicating that a new photo has been uploaded.
+ */
 require './secrets.php';
 require './util.php';
 
