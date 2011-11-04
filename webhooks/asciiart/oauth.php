@@ -12,9 +12,9 @@ if(isset($_GET['oauth_consumer_key']) && isset($_GET['oauth_consumer_secret']) &
     $resp = $client->post('/v1/oauth/token/access', array('oauth_verifier' => $_GET['oauth_verifier']));
     parse_str($resp, $tokens);
     $id = md5(time());
-    $sth = $dbh->prepare("INSERT INTO `{$mysqltable}`(id, consumerKey, consumerSecret, oauthToken, oauthTokenSecret, email) 
-                          VALUES(:id, :consumerKey, :consumerSecret, :oauthToken, :oauthTokenSecret, :email)", array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-    $status = $sth->execute(array(':id' => $id, ':consumerKey' => $_GET['oauth_consumer_key'], ':consumerSecret' => $_GET['oauth_consumer_secret'], ':oauthToken' => $tokens['oauth_token'], ':oauthTokenSecret' => $tokens['oauth_token_secret'], ':email' => $_GET['email']));
+    $sth = $dbh->prepare("INSERT INTO `{$mysqltable}`(id, email) 
+                          VALUES(:id, :email)", array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $status = $sth->execute(array(':id' => $id, ':email' => $_GET['email']));
     if($status)
     {
       $authClient = new OpenPhotoOAuth($hostParts['host'], $_GET['oauth_consumer_key'], $_GET['oauth_consumer_secret'], $tokens['oauth_token'], $tokens['oauth_token_secret']);
